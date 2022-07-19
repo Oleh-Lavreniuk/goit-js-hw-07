@@ -3,12 +3,13 @@ import { galleryItems } from "./gallery-items.js";
 
 console.log(galleryItems);
 
-/** //TODO - План:
-1) Создание и рендер разметки по массиву данных galleryItems и 
+/** 
+//TODO - План:
+++1) Создание и рендер разметки по массиву данных galleryItems и 
 предоставленному шаблону элемента галереи. Используй готовый 
 код из первого задания.
 
-2) Подключение скрипта и стилей библиотеки используя CDN сервис 
+++2) Подключение скрипта и стилей библиотеки используя CDN сервис 
 cdnjs. Необходимо добавить ссылки на два файла: 
 simple-lightbox.min.js и simple-lightbox.min.css.
 
@@ -23,45 +24,26 @@ simple-lightbox.min.js и simple-lightbox.min.css.
 изображения.
 */
 
-function createDivItem(array) {
+function createLinkItem(array) {
   return array.reduce(
     (acc, { preview, original, description }) =>
       acc +
-      `
-      <div class="gallery__item">
-        <a class="gallery__link" href="${original}">
-            <img            class="gallery__image"
-            src="${preview}"
-            data-source="${original}"
-            alt="${description}"
-            />
-        </a>
-      </div>
-
-      <a class="gallery__item" href="large-image.jpg">
-  <img class="gallery__image" src="small-image.jpg" alt="Image description" />
-</a>
+      `<a class="gallery__item" href="${original}">
+        <img class="gallery__image" 
+          src="${preview}" alt="${description}" />
+      </a>
 `,
     ""
   );
 }
 
-const addMarkup = createDivItem(galleryItems);
+const addMarkup = createLinkItem(galleryItems);
 
 const galleryList = document.querySelector(".gallery");
 galleryList.insertAdjacentHTML("beforeend", addMarkup);
 
-function itemHandler(ev) {
-  ev.preventDefault();
-
-  if (!ev.target.classList.contains("gallery__image")) {
-    return;
-  }
-
-  const source = ev.target.dataset.source;
-  const instance = basicLightbox.create(`<img src="${source}">`);
-
-  instance.show();
-}
-
-galleryList.addEventListener("click", itemHandler);
+const lightbox = new SimpleLightbox(".gallery a", {
+  captionsData: "alt",
+  captionPosition: "bottom",
+  captionDelay: 250,
+});
