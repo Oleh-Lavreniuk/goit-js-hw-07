@@ -47,6 +47,8 @@ const addMarkup = createDivItem(galleryItems);
 const galleryList = document.querySelector(".gallery");
 galleryList.insertAdjacentHTML("beforeend", addMarkup);
 
+galleryList.addEventListener("click", itemHandler);
+
 function itemHandler(ev) {
   ev.preventDefault();
 
@@ -57,7 +59,18 @@ function itemHandler(ev) {
   const source = ev.target.dataset.source;
   const instance = basicLightbox.create(`<img src="${source}">`);
 
+  //! Click keydown:
+  if (instance.show()) {
+    window.addEventListener("keydown", onEscClick);
+  }
+
+  function onEscClick(ev) {
+    if (ev.code === "Escape") {
+      instance.close();
+      window.removeEventListener("keydown", onEscClick);
+    }
+  }
+  //!
+
   instance.show();
 }
-
-galleryList.addEventListener("click", itemHandler);
