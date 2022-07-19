@@ -3,8 +3,7 @@ import { galleryItems } from "./gallery-items.js";
 
 console.log(galleryItems);
 
-/** //*
-//TODO - План:
+/** //TODO - План:
 1) Потрібно відмалювати розмітку галереї використовуючи 
 масив картинок
 
@@ -21,7 +20,7 @@ console.log(galleryItems);
 
 6) Має зявитися модальне вікно з картинкою яку ви отримали 
 з атрибута data - source
-*/ //*
+*/
 
 function createDivItem(array) {
   return array.reduce(
